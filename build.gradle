@@ -138,6 +138,7 @@ subprojects {
 
   test {
     useJUnit {}
+    jvmArgs = [ "--add-opens", "java.base/java.lang=ALL-UNNAMED" ]
     testLogging {
       events "passed", "failed", "skipped"
       exceptionFormat = 'full'
