@@ -29,6 +29,13 @@ copyJars() {
 
 base_dir=$(dirname $0)
 
+# bigtop java discovery
+. /usr/lib/bigtop-utils/bigtop-detect-javahome "17"
+
+if [ -f "$base_dir/config/cruise-control-env.sh" ]; then
+  . "$base_dir/config/cruise-control-env.sh"
+fi
+
 if [ -z "$SCALA_VERSION" ]; then
   SCALA_VERSION=2.13.6
 fi
