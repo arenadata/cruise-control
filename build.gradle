@@ -51,6 +51,9 @@ allprojects {
 
   repositories {
     mavenCentral()
+    maven {
+      url = uri("https://nexus.adsw.io/repository/maven-arenadata-release")
+    }
   }
 
   apply plugin: 'com.github.ben-manes.versions'
