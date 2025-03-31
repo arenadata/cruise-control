@@ -14,6 +14,7 @@ plugins {
 }
 
 group = 'com.linkedin.cruisecontrol'
+version = '2.5.142_arenadata1'
 
 project.ext {
   pomConfig = {
@@ -51,6 +52,9 @@ allprojects {
 
   repositories {
     mavenCentral()
+    maven {
+      url = uri("https://nexus.adsw.io/repository/maven-arenadata-release")
+    }
   }
 
   apply plugin: 'com.github.ben-manes.versions'
