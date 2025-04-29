@@ -50,10 +50,10 @@ project.ext {
 allprojects {
 
   repositories {
-    mavenCentral()
     maven {
       url = uri("https://nexus.adsw.io/repository/maven-arenadata-release")
     }
+    mavenCentral()
   }
 
   apply plugin: 'com.github.ben-manes.versions'
