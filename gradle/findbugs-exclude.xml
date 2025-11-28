@@ -62,6 +62,7 @@
 
   <Match>
     <Or>
+      <Bug pattern="MS_EXPOSE_REP"/>
       <Bug pattern="EI_EXPOSE_REP"/>
       <Bug pattern="EI_EXPOSE_REP2"/>
     </Or>

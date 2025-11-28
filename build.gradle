@@ -13,7 +13,8 @@ plugins {
   id "org.openapi.generator" version "5.3.0"
 }
 
-group = 'com.linkedin.cruisecontrol'
+group = 'io.arenadata.cruisecontrol'
+version = '2.5.143'
 
 project.ext {
   pomConfig = {
@@ -63,6 +64,13 @@ allprojects {
 
   repositories {
     mavenCentral()
+    maven {
+      url = 'https://maven.pkg.github.com/arenadata/*'
+      credentials {
+        username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
+        password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+      }
+    }
   }
 
   apply plugin: 'com.github.ben-manes.versions'
@@ -200,6 +208,15 @@ project(':cruise-control-core') {
   }
 
   publishing {
+    repositories {
+      maven {
+        url = project.findProperty("mavenUrl") ?: ""
+        credentials {
+          username = project.findProperty("mavenUsername") ?: ""
+          password = project.findProperty("mavenPassword") ?: ""
+        }
+      }
+    }
     publications {
       java(MavenPublication) {
         from components.java
@@ -292,12 +309,12 @@ project(':cruise-control') {
     implementation "org.apache.zookeeper:zookeeper:${zookeeperVersion}"
     implementation "io.netty:netty-handler:${nettyVersion}"
     implementation "io.netty:netty-transport-native-epoll:${nettyVersion}"
-    api "org.apache.kafka:kafka_$scalaBinaryVersion:$kafkaVersion"
-    api "org.apache.kafka:kafka-server:$kafkaVersion"
-    api "org.apache.kafka:kafka-server-common:$kafkaVersion"
-    api "org.apache.kafka:kafka-clients:$kafkaVersion"
+    api "io.arenadata.kafka:kafka_$scalaBinaryVersion:$kafkaVersion"
+    api "io.arenadata.kafka:kafka-server:$kafkaVersion"
+    api "io.arenadata.kafka:kafka-server-common:$kafkaVersion"
+    api "io.arenadata.kafka:kafka-clients:$kafkaVersion"
     // Add following dependency when upgrading to Kafka 3.5
-    api "org.apache.kafka:kafka-storage:$kafkaVersion"
+    api "io.arenadata.kafka:kafka-storage:$kafkaVersion"
     implementation "org.scala-lang:scala-library:$scalaVersion"
     implementation 'org.apache.commons:commons-math3:3.6.1'
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
@@ -332,8 +349,8 @@ project(':cruise-control') {
     testImplementation "org.scala-lang:scala-library:$scalaVersion"
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.easymock:easymock:5.5.0'
-    testImplementation "org.apache.kafka:kafka_$scalaBinaryVersion:$kafkaVersion:test"
-    testImplementation "org.apache.kafka:kafka-clients:$kafkaVersion:test"
+    testImplementation "io.arenadata.kafka:kafka_$scalaBinaryVersion:$kafkaVersion:test"
+    testImplementation "io.arenadata.kafka:kafka-clients:$kafkaVersion:test"
     testImplementation 'commons-io:commons-io:2.11.0'
     testImplementation 'org.apache.httpcomponents:httpclient:4.5.13:tests'
     testImplementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
@@ -467,9 +484,9 @@ project(':cruise-control-metrics-reporter') {
     implementation "org.slf4j:slf4j-api:1.7.36"
     implementation "com.yammer.metrics:metrics-core:2.2.0"
     implementation "org.apache.logging.log4j:log4j-slf4j-impl:2.17.2"
-    implementation "org.apache.kafka:kafka_$scalaBinaryVersion:$kafkaVersion"
-    implementation "org.apache.kafka:kafka-server:$kafkaVersion"
-    implementation "org.apache.kafka:kafka-clients:$kafkaVersion"
+    implementation "io.arenadata.kafka:kafka_$scalaBinaryVersion:$kafkaVersion"
+    implementation "io.arenadata.kafka:kafka-server:$kafkaVersion"
+    implementation "io.arenadata.kafka:kafka-clients:$kafkaVersion"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     // Temporary pin for vulnerability
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
@@ -478,10 +495,10 @@ project(':cruise-control-metrics-reporter') {
     testImplementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
     testImplementation 'org.powermock:powermock-module-junit4:2.0.9'
     testImplementation 'org.powermock:powermock-api-easymock:2.0.9'
-    testImplementation "org.apache.kafka:kafka-clients:$kafkaVersion:test"
-    testImplementation "org.apache.kafka:kafka-server-common:$kafkaVersion"
-    testImplementation "org.apache.kafka:kafka-group-coordinator:$kafkaVersion"
-    testImplementation "org.apache.kafka:kafka-storage:$kafkaVersion"
+    testImplementation "io.arenadata.kafka:kafka-clients:$kafkaVersion:test"
+    testImplementation "io.arenadata.kafka:kafka-server-common:$kafkaVersion"
+    testImplementation "io.arenadata.kafka:kafka-group-coordinator:$kafkaVersion"
+    testImplementation "io.arenadata.kafka:kafka-storage:$kafkaVersion"
     testImplementation 'commons-io:commons-io:2.11.0'
     testImplementation "org.apache.zookeeper:zookeeper:${zookeeperVersion}"
     testOutput sourceSets.test.output
