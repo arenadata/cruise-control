@@ -361,6 +361,15 @@ project(':cruise-control') {
   }
 
   publishing {
+    repositories {
+      maven {
+        url = project.findProperty("mavenUrl") ?: ""
+        credentials {
+          username = project.findProperty("mavenUsername") ?: ""
+          password = project.findProperty("mavenPassword") ?: ""
+        }
+      }
+    }
     publications {
       java(MavenPublication) {
         from components.java
@@ -505,6 +514,15 @@ project(':cruise-control-metrics-reporter') {
   }
 
   publishing {
+    repositories {
+      maven {
+        url = project.findProperty("mavenUrl") ?: ""
+        credentials {
+          username = project.findProperty("mavenUsername") ?: ""
+          password = project.findProperty("mavenPassword") ?: ""
+        }
+      }
+    }
     publications {
       java(MavenPublication) {
         from components.java
